@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>watch options</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="step01">
+    <p>{{ num }}</p>
+    <button @click="num++">num++</button>
+</div>
+<div id="step02">
+    <p>{{ num }}</p>
+    <button @click="num++">num++</button>
+</div>
+<script>
+    const { createApp, ref, watch } = Vue;
+    createApp({
+        setup(){
+            const num = ref(0);
+            watch(num, (nv, ov)=> {
+                console.log(`nv : ${nv}, ov: ${ov}`)
+            },{ immediate : true });
+            return { num }
+        }
+    }).mount("#step01");
+
+    createApp({
+        setup(){
+            const num = ref(0);
+            watch(num, (nv, ov)=> {
+                console.log(`nv : ${nv}, ov: ${ov}`)
+            },{ once : true });
+            return { num }
+        }
+    }).mount("#step02");
+</script>
+
+</body>
+</html>

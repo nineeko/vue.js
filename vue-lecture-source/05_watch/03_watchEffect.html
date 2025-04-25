@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>watchEffect</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="step01">
+  <p>{{ num }}</p>
+  <button @click="num++">num++</button>
+</div>
+<script>
+  const { createApp, ref, watchEffect } = Vue;
+  createApp({
+    setup(){
+    const num = ref(0);
+    watchEffect(()=>{
+      console.log(`num : ${num.value}`);
+    });
+      return { num }
+    }
+  }).mount("#step01");
+</script>
+
+</body>
+</html>

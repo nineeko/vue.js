@@ -148,6 +148,9 @@
         <!-- 좋아요한 와인 목록 & 쇼핑 완료 토글 버튼 -->
         <div style="margin-bottom:1rem;">
             <p>내가 좋아하는 와인 : {{ likes.join(', ')}}</p>
+            <button class="btn btn-secondary" @click="toggleViewing">
+              {{ viewing ? '쇼핑하기': '쇼핑 완료' }}
+            </button>
         </div>
         <!-- 와인 카드 그리드 -->
         <div class="appContainer">
@@ -173,7 +176,14 @@
             </template>
             <!-- 쇼핑 완료 상태 -->
             <template v-else>
-
+              <div
+                class="wine-card"
+                v-for="wine in totalLikes"
+                :key="wine.id"
+              >
+                <p>{{ wine.wine }}</p>
+                <img :src="wine.image" :alt="wine.wine"/>
+              </div>
             </template>
         </div>
     </template>
@@ -203,6 +213,10 @@
                     (state.pageIndex + 1) * state.pageSize
                 )
             );
+            // totalLikes : likes 배열에 포함된 id들의 전체 와인 데이터 목록
+            const totalLikes = computed(() =>
+                  state.wines.filter(wine => state.likes.includes(wine.id))
+            );
             // 기능 메서드
             const goBack = () => {
                 if (state.pageIndex > 0) state.pageIndex--;
@@ -210,6 +224,7 @@
             const goNext = () => {
                 if (state.pageIndex + 1 < totalPages.value) state.pageIndex++;
             };
+            const toggleViewing = () => { state.viewing = !state.viewing };
             const toggleLike = id => {
                 if (state.likes.includes(id)) {
                     state.likes = state.likes.filter(wid => wid !== id);
@@ -218,6 +233,8 @@
                     state.likes.push(id);
                 }
             };
+
+
             // DOM 요소로 컴포넌트가 삽입된 직후 동작하는 라이프사이클 훅
             onMounted(async () => {
                 console.log("[mounted] 데이터 fetch 시작");
@@ -234,7 +251,9 @@
                 pageWines,
                 goBack,
                 goNext,
-                toggleLike
+                toggleLike,
+                toggleViewing,
+                totalLikes
             }
         }
     }).mount("#app");
