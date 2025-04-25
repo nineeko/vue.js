@@ -20,7 +20,7 @@
         setup(){
             const num = ref(0);
             watch(num, (nv, ov)=> {
-                console.log(`nv : ${nv}, ov: ${ov}`)
+                console.log(`nv : ${nv}, ov: ${ov}`);
             },{ immediate : true });
             return { num }
         }
@@ -30,7 +30,7 @@
         setup(){
             const num = ref(0);
             watch(num, (nv, ov)=> {
-                console.log(`nv : ${nv}, ov: ${ov}`)
+                console.log(`nv : ${nv}, ov: ${ov}`);
             },{ once : true });
             return { num }
         }
